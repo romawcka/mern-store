@@ -7,7 +7,7 @@ import {
   createRoutesFromElements as routes,
 } from 'react-router-dom';
 import App from './App.jsx';
-import { Home } from './screen/index.js';
+import { Home, Product } from './screen/index.js';
 
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/style.css';
@@ -15,7 +15,8 @@ import './assets/styles/style.css';
 const router = createRouter(
   routes(
     <Route path="/" element={<App />}>
-      <Route path="/" element={<Home />} />
+      <Route index={true} path="/" element={<Home />} />
+      <Route path="/product/:id" element={<Product />} />
     </Route>
   )
 );
