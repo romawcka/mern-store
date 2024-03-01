@@ -8,12 +8,16 @@
     "start": "node backend/index.js",
     "serve": "nodemon backend/index.js",
     "client": "cd frontend && yarn dev",
-    "dev": "concurrently \"yarn serve\" \"yarn client\""
+    "dev": "concurrently \"yarn serve\" \"yarn client\"",
+    "data-i": "node backend/seeder",
+    "data-d": "node backend/seeder -d"
   },
   "author": "romawcka <yakubovroma5@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "mongoose": "^8.2.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
