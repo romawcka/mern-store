@@ -1,12 +1,23 @@
+import { useEffect, useState } from 'react';
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
-import products from '../../products';
 import { Rating } from '../../components';
 
 //TODO - add destruture for the future data
 const Product = () => {
+  const [currentProduct, setCurrentProduct] = useState([]);
   const { id: productId } = useParams();
-  const currentProduct = products.find((product) => product._id === productId);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const data = await fetch(
+        `http://localhost:1000/api/products/${productId}`
+      );
+      const res = await data.json();
+      setCurrentProduct(res);
+    };
+    getProducts();
+  }, [productId]);
 
   return (
     <>

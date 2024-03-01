@@ -1,8 +1,19 @@
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import products from '../../products';
 import { Product } from '../../components';
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const data = await fetch('http://localhost:1000/api/products/');
+      const res = await data.json();
+      setProducts(res);
+    };
+    getProducts();
+  }, []);
+
   return (
     <>
       <h1>Latest Products</h1>
