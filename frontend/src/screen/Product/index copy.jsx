@@ -1,44 +1,48 @@
+import { useEffect, useState } from 'react';
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import { Loader, Message, Rating } from '../../components';
-import { useGetProductDetailQuery } from '../../slices/productsApiSlice';
+import { Rating } from '../../components';
 
+//TODO - add destruture for the future data
 const Product = () => {
+  const [currentProduct, setCurrentProduct] = useState([]);
   const { id: productId } = useParams();
-  const {
-    data: currentProduct = {},
-    isLoading,
-    error,
-  } = useGetProductDetailQuery(productId);
-  const { image, name, rating, numReviews, price, description, countInStock } =
-    currentProduct;
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const data = await fetch(
+        `http://localhost:1000/api/products/${productId}`
+      );
+      const res = await data.json();
+      setCurrentProduct(res);
+    };
+    getProducts();
+  }, [productId]);
 
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
         Go back
       </Link>
-
-      {/* @desc --> check for loading and error */}
-      {isLoading && <Loader />}
-      {error && <Message variant="danger">{error?.message}</Message>}
-
       <Row>
         {/* first column */}
         <Col md={5}>
-          <Image src={image} alt={name} fluid />
+          <Image src={currentProduct.image} alt={currentProduct.name} fluid />
         </Col>
         {/* second column */}
         <Col md={4}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h3>{name}</h3>
+              <h3>{currentProduct.name}</h3>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Rating value={rating} qnt={numReviews} />
+              <Rating
+                value={currentProduct.rating}
+                qnt={currentProduct.numReviews}
+              />
             </ListGroup.Item>
-            <ListGroup.Item>Price: ${price}</ListGroup.Item>
-            <ListGroup.Item>Price: {description}</ListGroup.Item>
+            <ListGroup.Item>Price: ${currentProduct.price}</ListGroup.Item>
+            <ListGroup.Item>Price: {currentProduct.description}</ListGroup.Item>
           </ListGroup>
         </Col>
         {/* third column */}
@@ -50,7 +54,7 @@ const Product = () => {
                 <Row>
                   <Col>Price:</Col>
                   <Col>
-                    <strong>${price}</strong>
+                    <strong>${currentProduct.price}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -60,7 +64,9 @@ const Product = () => {
                   <Col>Status:</Col>
                   <Col>
                     <strong>
-                      {countInStock > 0 ? 'In-Stock' : 'Out-of-Stock'}
+                      {currentProduct.countInStock > 0
+                        ? 'In-Stock'
+                        : 'Out-of-Stock'}
                     </strong>
                   </Col>
                 </Row>
@@ -70,7 +76,7 @@ const Product = () => {
                 <Button
                   className="btn-block"
                   type="button"
-                  disabled={!countInStock}
+                  disabled={!currentProduct.countInStock}
                 >
                   Add To Cart
                 </Button>
