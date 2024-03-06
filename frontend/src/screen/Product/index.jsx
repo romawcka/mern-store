@@ -1,17 +1,40 @@
-import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Image,
+  ListGroup,
+  Row,
+} from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Loader, Message, Rating } from '../../components';
 import { useGetProductDetailQuery } from '../../slices/productsApiSlice';
+import { addToCart } from '../../slices/cartSlice';
 
 const Product = () => {
   const { id: productId } = useParams();
+  const [qty, setQty] = useState(1);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     data: currentProduct = {},
     isLoading,
     error,
   } = useGetProductDetailQuery(productId);
+
   const { image, name, rating, numReviews, price, description, countInStock } =
     currentProduct;
+
+  const handleAddToCart = () => {
+    // чтобы добавить полностью весь объект товара, просто спредим все сущность ...currentProduct, qty
+    dispatch(addToCart({ image, name, description, price, countInStock, qty }));
+    // navigate('/cart');
+  };
 
   return (
     <>
@@ -65,12 +88,41 @@ const Product = () => {
                   </Col>
                 </Row>
               </ListGroup.Item>
+
+              {/* qty */}
+              {!!countInStock && (
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Qty</Col>
+                    <Col>
+                      <Form.Control
+                        as="select"
+                        value={qty}
+                        onChange={(e) => setQty(Number(e.target.value))}
+                      >
+                        {[
+                          Array.from(
+                            { length: countInStock },
+                            (_, index) => index + 1
+                          ).map((num) => (
+                            <option value={num} key={num}>
+                              {num}
+                            </option>
+                          )),
+                        ]}
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              )}
+
               {/* button */}
               <ListGroup.Item>
                 <Button
                   className="btn-block"
                   type="button"
                   disabled={!countInStock}
+                  onClick={handleAddToCart}
                 >
                   Add To Cart
                 </Button>
