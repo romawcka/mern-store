@@ -1,18 +1,10 @@
 import { useState } from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Image,
-  ListGroup,
-  Row,
-} from 'react-bootstrap';
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Loader, Message, Rating } from '../../components';
-import { useGetProductDetailQuery } from '../../slices/productsApiSlice';
+import { Loader, Message, QtyForm, Rating } from '../../components';
 import { addToCart } from '../../slices/cartSlice';
+import { useGetProductDetailQuery } from '../../slices/productsApiSlice';
 
 const Product = () => {
   const { id: productId } = useParams();
@@ -31,9 +23,13 @@ const Product = () => {
     currentProduct;
 
   const handleAddToCart = () => {
-    // чтобы добавить полностью весь объект товара, просто спредим все сущность ...currentProduct, qty
-    dispatch(addToCart({ image, name, description, price, countInStock, qty }));
-    // navigate('/cart');
+    dispatch(
+      addToCart({
+        ...currentProduct,
+        qty,
+      })
+    );
+    navigate('/cart');
   };
 
   return (
@@ -95,22 +91,11 @@ const Product = () => {
                   <Row>
                     <Col>Qty</Col>
                     <Col>
-                      <Form.Control
-                        as="select"
+                      <QtyForm
                         value={qty}
-                        onChange={(e) => setQty(Number(e.target.value))}
-                      >
-                        {[
-                          Array.from(
-                            { length: countInStock },
-                            (_, index) => index + 1
-                          ).map((num) => (
-                            <option value={num} key={num}>
-                              {num}
-                            </option>
-                          )),
-                        ]}
-                      </Form.Control>
+                        length={countInStock}
+                        setValue={(e) => setQty(Number(e.target.value))}
+                      />
                     </Col>
                   </Row>
                 </ListGroup.Item>
