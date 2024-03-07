@@ -11,6 +11,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
+
       const existItem = state.cartItems.find((i) => i._id === item._id);
 
       if (existItem) {
@@ -23,10 +24,16 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+    removeFromCart: (state, action) => {
+      const id = action.payload;
+      state.cartItems = state.cartItems.filter((i) => i._id !== id);
+
+      return updateCart(state);
+    },
   },
 });
 
 //@ -- below is actions
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 // @ -- below is reducer
 export default cartSlice.reducer;
