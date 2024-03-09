@@ -16,7 +16,7 @@ const loginUser = asyncHandler(async (req, res) => {
     });
 
     //@ Set jwt as http-only cookie
-    res.cookie('jwt-cookie', token, {
+    res.cookie('jwt', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== 'development',
       sameSite: 'strict',
