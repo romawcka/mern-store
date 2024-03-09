@@ -10,11 +10,27 @@ import {
   updateUser,
   updateUserProfile,
 } from '../controllers/user.controller.js';
+import { admin, protect } from '../middleware/authMiddlleware.js';
 
 export const router = express.Router();
 // /api/users
-router.route('/').post(registerUser).get(getUsers);
+
+// @ -> public route | -> admin route
+router.route('/').post(registerUser).get(protect, admin, getUsers);
+
+// @ --> public routes
 router.post('/logout', logoutUser);
 router.post('/login', loginUser);
-router.route('/profile').get(getUserProfile).put(updateUserProfile);
-router.route('/:id').get(getUser).delete(deleteUser).put(updateUser);
+
+// @ -> private routes
+router
+  .route('/profile')
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile);
+
+// @ -> admin routes
+router
+  .route('/:id')
+  .get(protect, admin, getUser)
+  .delete(protect, admin, deleteUser)
+  .put(protect, admin, updateUser);
