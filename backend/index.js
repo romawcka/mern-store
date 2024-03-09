@@ -12,6 +12,10 @@ const port = process.env.PORT;
 // initialization of app
 const app = express();
 
+// body parser (will able to read data from req.body)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // launching app
 app.get('/', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // Разрешить доступ со всех источников
