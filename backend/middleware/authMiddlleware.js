@@ -13,8 +13,6 @@ export const protect = asyncHandler(async (req, res, next) => {
       // need to decode id from token
       const decodeded = jwt.verify(token, process.env.JWT_SECRET); // проверка, чтобы JWT_SECRET сошелся с тем что в роуте
       req.user = await User.findById(decodeded.userID).select('-password');
-
-      next();
     } catch (error) {
       console.log(error);
       res.status(401);
