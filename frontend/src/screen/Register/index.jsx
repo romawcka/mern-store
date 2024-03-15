@@ -3,17 +3,19 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { FormContainer, Loader } from '../../components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../../slices/usersApiSlice';
+import { useRegisterMutation } from '../../slices/usersApiSlice';
 import { setCredentials } from '../../slices/authSlice';
 import { toast } from 'react-toastify';
 
-const Login = () => {
+const Register = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [login, { isLoading }] = useLoginMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -29,20 +31,39 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate(redirect);
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.data?.message || error.error);
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    } else {
+      console.log(name, email, password);
+      try {
+        const res = await register({ name, email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate(redirect);
+        toast.success(`${name} account was successfully register`);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.data?.message || error.error);
+      }
     }
   };
 
   return (
     <FormContainer>
-      <h1 className="text-center">Sign In</h1>
+      <h1 className="text-center">Sign Up</h1>
       <Form onSubmit={handleSubmit}>
+        {/* */}
+        {/* name input */}
+        <Form.Group controlId="name" className="my-3">
+          <Form.Label>Your name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+
         {/* */}
         {/* email input */}
         <Form.Group controlId="email" className="my-3">
@@ -54,8 +75,10 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
+
         {/* */}
         {/* password input */}
+
         <Form.Group controlId="password" className="my-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -65,7 +88,19 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
 
-          {/* log in button */}
+          {/* */}
+          {/* confirme password input */}
+          <Form.Group controlId="confirmPassword" className="my-3">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
+          {/* button */}
           {isLoading ? (
             <Loader />
           ) : (
@@ -75,7 +110,7 @@ const Login = () => {
               disabled={isLoading}
               className="mt-3"
             >
-              Sing In
+              Register
             </Button>
           )}
         </Form.Group>
@@ -83,9 +118,9 @@ const Login = () => {
 
       <Row className="py-3">
         <Col>
-          New Customer?{' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-            Register
+          Alredy have an account?{' '}
+          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+            Log in
           </Link>
         </Col>
       </Row>
@@ -93,4 +128,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
