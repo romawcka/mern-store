@@ -20,10 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 // cookie parser (will able to react data from cookie)
 app.use(cookieParser());
 // unable cros policy
-app.use(cors());
+// app.use(cors());
 
 // launching app
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   res.send('Api is running...');
 });
 
@@ -36,4 +36,8 @@ app.use(errorHandler);
 mongooseConnection();
 
 // live-server
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(port, () =>
+  console.log(
+    `Server is running on port ${port}. CORS-enabled web server listening on ${port}`
+  )
+);
