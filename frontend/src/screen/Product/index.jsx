@@ -27,7 +27,7 @@ const Product = () => {
       addToCart({
         ...currentProduct,
         qty,
-      })
+      }),
     );
     navigate('/cart');
   };

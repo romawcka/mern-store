@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
-import { Rating } from '../../components';
+import {useEffect, useState} from 'react';
+import {Button, Card, Col, Image, ListGroup, Row} from 'react-bootstrap';
+import {Link, useParams} from 'react-router-dom';
+import {Rating} from '../../components';
 
 //TODO - add destruture for the future data
 const Product = () => {
   const [currentProduct, setCurrentProduct] = useState([]);
-  const { id: productId } = useParams();
+  const {id: productId} = useParams();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -21,7 +21,7 @@ const Product = () => {
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
+      <Link className='btn btn-light my-3' to='/'>
         Go back
       </Link>
       <Row>
@@ -31,7 +31,7 @@ const Product = () => {
         </Col>
         {/* second column */}
         <Col md={4}>
-          <ListGroup variant="flush">
+          <ListGroup variant='flush'>
             <ListGroup.Item>
               <h3>{currentProduct.name}</h3>
             </ListGroup.Item>
@@ -48,7 +48,7 @@ const Product = () => {
         {/* third column */}
         <Col md={3}>
           <Card>
-            <ListGroup variant="flush">
+            <ListGroup variant='flush'>
               {/* price */}
               <ListGroup.Item>
                 <Row>
@@ -74,8 +74,8 @@ const Product = () => {
               {/* button */}
               <ListGroup.Item>
                 <Button
-                  className="btn-block"
-                  type="button"
+                  className='btn-block'
+                  type='button'
                   disabled={!currentProduct.countInStock}
                 >
                   Add To Cart
