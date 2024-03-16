@@ -2,11 +2,11 @@ import { Badge, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { FaShoppingCart as ShoppingCart, FaUser as User } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import logo from '../../assets/logo.png';
-import { useLogoutMutation } from '../../slices/usersApiSlice';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../slices/authSlice';
 import { toast } from 'react-toastify';
+import logo from '../../assets/logo.png';
+import { logout } from '../../slices/authSlice';
+import { useLogoutMutation } from '../../slices/usersApiSlice';
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -57,7 +57,9 @@ const Header = () => {
                 // dropdown menu when user login
                 <NavDropdown title={userInfo.name} id="username">
                   <LinkContainer to="/profile">
-                    <NavDropdown.Item>{userInfo.name} profiel</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      {userInfo.name}`s profile
+                    </NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={handleLogout}>
                     Logout
