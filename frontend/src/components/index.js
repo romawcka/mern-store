@@ -7,5 +7,6 @@ export { default as PrivateRouter } from './PrivateRouter';
 export { default as Product } from './Product';
 export { default as QtyForm } from './QtyForm';
 export { default as Rating } from './Rating';
+export { default as CheckoutSteps } from './CheckoutSteps';
 
 // export { default as ProductItem } from './ProductItem/index';

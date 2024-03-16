@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FormContainer } from '../../components';
+import { CheckoutSteps, FormContainer } from '../../components';
 import { saveShippingAddress } from '../../slices/cartSlice';
 import FormComponent from './FormComponent';
 
@@ -26,6 +26,7 @@ const Shipping = () => {
 
   return (
     <FormContainer>
+      <CheckoutSteps step1 step2 />
       <h1>Shipping</h1>
 
       <Form onSubmit={handleSubmit}>
