@@ -36,8 +36,4 @@ app.use(errorHandler);
 mongooseConnection();
 
 // live-server
-app.listen(port, () =>
-  console.log(
-    `Server is running on port ${port}. CORS-enabled web server listening on ${port}`
-  )
-);
+app.listen(port, () => console.log(`Server is running on port ${port}. CORS-enabled web server listening on ${port}`));

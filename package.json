@@ -8,7 +8,7 @@
     "start": "node backend/index.js",
     "serve": "nodemon backend/index.js",
     "client": "cd frontend && yarn dev",
-    "dev": "concurrently \"yarn serve\" \"yarn client\"",
+    "dev": "concurrently \"yarn serve\" \"yarn client\" \"yarn format\"",
     "data-i": "node backend/seeder",
     "data-d": "node backend/seeder -d"
   },

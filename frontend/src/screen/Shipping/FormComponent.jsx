@@ -1,14 +1,7 @@
 import { memo } from 'react';
 import { Form } from 'react-bootstrap';
 
-const FormComponent = ({
-  controlId,
-  className = 'my-2',
-  label,
-  value,
-  text,
-  onChange,
-}) => {
+const FormComponent = ({ controlId, className = 'my-2', label, value, text, onChange }) => {
   return (
     <>
       <Form.Group controlId={controlId} className={className}>
@@ -18,6 +11,7 @@ const FormComponent = ({
           value={value}
           placeholder={`Enter your ${text}`}
           onChange={onChange}
+          required
         ></Form.Control>
       </Form.Group>
     </>

@@ -15,10 +15,7 @@ const app = express();
 // launching app
 app.get('/', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // Разрешить доступ со всех источников
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.send('Api is running...');
   next();
 });
@@ -26,22 +23,16 @@ app.get('/', (req, res, next) => {
 // get all products
 app.get('/api/products', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // Разрешить доступ со всех источников
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.json(products);
   next();
 });
 
 // get single products
 app.get('/api/products/:id', (req, res, next) => {
-  const product = products.find((product) => product._id === req.params.id);
+  const product = products.find(product => product._id === req.params.id);
   res.header('Access-Control-Allow-Origin', '*'); // Разрешить доступ со всех источников
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.json(product);
   next();
 });

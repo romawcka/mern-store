@@ -23,14 +23,7 @@ router.post('/logout', logoutUser);
 router.post('/login', loginUser);
 
 // @ -> private routes
-router
-  .route('/profile')
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+router.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile);
 
 // @ -> admin routes
-router
-  .route('/:id')
-  .get(protect, admin, getUser)
-  .delete(protect, admin, deleteUser)
-  .put(protect, admin, updateUser);
+router.route('/:id').get(protect, admin, getUser).delete(protect, admin, deleteUser).put(protect, admin, updateUser);

@@ -13,7 +13,7 @@ const ReviewSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const ProductSchema = new mongoose.Schema(
@@ -67,7 +67,7 @@ const ProductSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export const Product = mongoose.model('Product', ProductSchema);
