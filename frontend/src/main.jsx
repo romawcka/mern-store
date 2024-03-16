@@ -20,6 +20,7 @@ import { Provider } from 'react-redux';
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/style.css';
 import store from './store.js';
+import { PrivateRouter } from './components/index.js';
 
 const router = createRouter(
   routes(
@@ -29,7 +30,10 @@ const router = createRouter(
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/shipping" element={<Shipping />} />
+      {/* for privacy */}
+      <Route path="" element={<PrivateRouter />}>
+        <Route path="/shipping" element={<Shipping />} />
+      </Route>
     </Route>
   )
 );
