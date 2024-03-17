@@ -20,7 +20,7 @@ const cartSlice = createSlice({
 
       if (existItem) {
         state.cartItems = state.cartItems.map((i) =>
-          i._id === existItem._id ? item : i
+          i._id === existItem._id ? item : i,
         );
       } else {
         state.cartItems = [...state.cartItems, item];
@@ -42,6 +42,10 @@ const cartSlice = createSlice({
       state.paymentMethod = action.payload;
       return updateCart(state);
     },
+    clearCart: (state) => {
+      state.cart = [];
+      return updateCart(state);
+    },
   },
 });
 
@@ -51,6 +55,7 @@ export const {
   removeFromCart,
   saveShippingAddress,
   savePaymentMethod,
+  clearCart,
 } = cartSlice.actions;
 // @ -- below is reducer
 export default cartSlice.reducer;
