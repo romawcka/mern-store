@@ -8,7 +8,7 @@
     "start": "node backend/index.js",
     "serve": "nodemon backend/index.js",
     "client": "cd frontend && yarn dev",
-    "dev": "concurrently \"yarn serve\" \"yarn client\" \"yarn format\"",
+    "dev": "concurrently \"yarn serve\" \"yarn client\"",
     "data-i": "node backend/seeder",
     "data-d": "node backend/seeder -d"
   },
@@ -27,6 +27,11 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
-    "nodemon": "^3.1.0"
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.34.1",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5"
   }
 }
