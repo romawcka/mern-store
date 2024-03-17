@@ -44,14 +44,24 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route -> GET 'api/orders/myorders'
 // @access -> private
 const getMyOrders = asyncHandler(async (req, res) => {
-  res.send('add order items');
+  const orders = await Order.find({ user: req.user._id });
+  res.status(200).json(orders);
 });
 
 // @desc -> get order by id
 // @route -> GET 'api/orders/:id'
 // @access -> private/admin
 const getOrder = asyncHandler(async (req, res) => {
-  res.send('get specific order');
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email',
+  );
+  if (order) {
+    res.status(200).json(order);
+  } else {
+    res.status(404);
+    throw new Error('Order not find');
+  }
 });
 
 // @desc -> update order to paid
