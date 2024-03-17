@@ -7,7 +7,16 @@ import {
   createRoutesFromElements as routes,
 } from 'react-router-dom';
 import App from './App.jsx';
-import { Cart, Home, Login, Payment, Product, Register, Shipping } from './screen/index.js';
+import {
+  Cart,
+  Home,
+  Login,
+  Payment,
+  PlaceOrder,
+  Product,
+  Register,
+  Shipping,
+} from './screen/index.js';
 
 import { Provider } from 'react-redux';
 import './assets/styles/bootstrap.custom.css';
@@ -19,14 +28,15 @@ const router = createRouter(
   routes(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
-      <Route path="/product/:id" element={<Product />} />
+      <Route path="/products/:id" element={<Product />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      {/* for privacy */}
+      {/* private routes */}
       <Route path="" element={<PrivateRouter />}>
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/placeorder" element={<PlaceOrder />} />
       </Route>
     </Route>,
   ),

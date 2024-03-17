@@ -32,9 +32,11 @@ const Product = () => {
     navigate('/cart');
   };
 
+  const moveBack = () => navigate(-1);
+
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
+      <Link className="btn btn-light my-3" onClick={moveBack}>
         Go back
       </Link>
 
