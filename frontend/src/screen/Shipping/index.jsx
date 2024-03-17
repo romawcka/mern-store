@@ -5,23 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import { CheckoutSteps, FormContainer } from '../../components';
 import { saveShippingAddress } from '../../slices/cartSlice';
 import FormComponent from './FormComponent';
-import { toast } from 'react-toastify';
 
 const Shipping = () => {
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
   const [address, setAddress] = useState(shippingAddress?.address || '');
   const [city, setCity] = useState(shippingAddress?.city || '');
-  const [zipcode, setZipcode] = useState(shippingAddress?.zipcode || '');
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress?.postalCode || '',
+  );
   const [country, setCountry] = useState(shippingAddress?.country || '');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ address, city, zipcode, country }));
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate('/payment');
   };
 
@@ -36,7 +37,7 @@ const Shipping = () => {
           value={address}
           label={'Address'}
           controlId={address}
-          onChange={e => setAddress(e.target.value)}
+          onChange={(e) => setAddress(e.target.value)}
           text={'address'}
         />
         {/* city form */}
@@ -44,15 +45,15 @@ const Shipping = () => {
           value={city}
           label={'City'}
           controlId={city}
-          onChange={e => setCity(e.target.value)}
+          onChange={(e) => setCity(e.target.value)}
           text={'city'}
         />
         {/* zipcode form */}
         <FormComponent
-          value={zipcode}
-          label={'Zipcode'}
-          controlId={zipcode}
-          onChange={e => setZipcode(e.target.value)}
+          value={postalCode}
+          label={'Postal Code'}
+          controlId={postalCode}
+          onChange={(e) => setPostalCode(e.target.value)}
           text={'zipcode'}
         />
         {/* country form */}
@@ -60,7 +61,7 @@ const Shipping = () => {
           value={country}
           label={'Country'}
           controlId={country}
-          onChange={e => setCountry(e.target.value)}
+          onChange={(e) => setCountry(e.target.value)}
           text={'country'}
         />
         {/* button form */}
