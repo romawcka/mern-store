@@ -58,7 +58,7 @@ const Cart = () => {
 
                   {/* @desc --> link for product page */}
                   <Col md={3}>
-                    <Link to={`/product/${item._id}`} replace={true}>
+                    <Link to={`/products/${item._id}`} replace={true}>
                       {item.name}
                     </Link>
                   </Col>

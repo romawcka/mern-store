@@ -11,6 +11,7 @@ import {
   Cart,
   Home,
   Login,
+  Order,
   Payment,
   PlaceOrder,
   Product,
@@ -37,6 +38,7 @@ const router = createRouter(
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/placeorder" element={<PlaceOrder />} />
+        <Route path="/orders/:id" element={<Order />} />
       </Route>
     </Route>,
   ),
