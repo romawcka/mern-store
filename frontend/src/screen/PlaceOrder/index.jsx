@@ -44,6 +44,7 @@ const PlaceOrder = () => {
       }).unwrap();
       dispatch(clearCart());
       navigate(`order/${res._id}`);
+      console.log(res);
     } catch (error) {
       toast.error(error?.data?.message);
     }
