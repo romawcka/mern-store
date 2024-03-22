@@ -16,6 +16,7 @@ import {
   Payment,
   PlaceOrder,
   Product,
+  Profile,
   Register,
   Shipping,
 } from './screen/index.js';
@@ -40,6 +41,7 @@ const router = createRouter(
         <Route path="/payment" element={<Payment />} />
         <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/orders/:id" element={<Order />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Route>,
   ),
