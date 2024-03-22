@@ -13,6 +13,7 @@ import {
   Home,
   Login,
   Order,
+  OrderList,
   Payment,
   PlaceOrder,
   Product,
@@ -24,7 +25,7 @@ import {
 import { Provider } from 'react-redux';
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/style.css';
-import { PrivateRouter } from './components/index.js';
+import { AdminRouter, PrivateRouter } from './components/index.js';
 import store from './store.js';
 
 const router = createRouter(
@@ -42,6 +43,10 @@ const router = createRouter(
         <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/orders/:id" element={<Order />} />
         <Route path="/profile" element={<Profile />} />
+      </Route>
+      {/* routes for admin */}
+      <Route path="" element={<AdminRouter />}>
+        <Route path="/admin/orderlist" element={<OrderList />} />
       </Route>
     </Route>,
   ),

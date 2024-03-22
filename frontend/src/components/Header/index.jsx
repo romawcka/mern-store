@@ -1,4 +1,4 @@
-import { Badge, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Badge, Container, Nav, Navbar } from 'react-bootstrap';
 import { FaShoppingCart as ShoppingCart, FaUser as User } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import logo from '../../assets/logo.png';
 import { logout } from '../../slices/authSlice';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
+import DropDown from '../ReusableComponents/DropDown';
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -55,23 +56,32 @@ const Header = () => {
               {/* */}
               {userInfo ? (
                 // dropdown menu when user login
-                <NavDropdown title={userInfo.name} id="username">
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>
-                      {userInfo.name}`s profile
-                    </NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={handleLogout}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
+                <DropDown
+                  path="/profile"
+                  id="username"
+                  title={userInfo.name}
+                  name={userInfo.name}
+                  onClick={handleLogout}
+                />
               ) : (
-                //
                 <LinkContainer to="/login">
                   <Nav.Link>
                     <User /> Sign In
                   </Nav.Link>
                 </LinkContainer>
+              )}
+              {/* for admin only */}
+              {userInfo && userInfo.isAdmin && (
+                <DropDown
+                  title="Admin Panel"
+                  name="Orders"
+                  id="adminuser"
+                  path="/admin/orderlist"
+                  pathSecond="/admin/userlist"
+                  nameSecond="Users"
+                  pathThird="/admin/productlist"
+                  nameThird="Products"
+                />
               )}
             </Nav>
           </Navbar.Collapse>

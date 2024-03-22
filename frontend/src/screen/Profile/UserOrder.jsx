@@ -1,6 +1,5 @@
 import { FaTimes as Cross } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
-
 import { memo } from 'react';
 import { Button, Table } from 'react-bootstrap';
 
@@ -25,7 +24,7 @@ const UserOrder = ({ orders }) => {
             <td>${order.totalPrice}</td>
             <td>
               {order.isPaid ? (
-                order.isPaid.substring(0, 10)
+                order.paidAt?.substring(0, 10)
               ) : (
                 <Cross style={{ color: 'red' }} />
               )}
