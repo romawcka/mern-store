@@ -1,4 +1,5 @@
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
@@ -17,6 +18,7 @@ import {
   Payment,
   PlaceOrder,
   Product,
+  ProductsList,
   Profile,
   Register,
   Shipping,
@@ -47,6 +49,7 @@ const router = createRouter(
       {/* routes for admin */}
       <Route path="" element={<AdminRouter />}>
         <Route path="/admin/orderslist" element={<OrderList />} />
+        <Route path="/admin/productslist" element={<ProductsList />} />
       </Route>
     </Route>,
   ),
