@@ -8,3 +8,4 @@ export { default as Shipping } from './Shipping';
 export { default as PlaceOrder } from './PlaceOrder';
 export { default as Order } from './Order';
 export { default as Profile } from './Profile';
+export { default as OrderList } from './Admin/OrderList';

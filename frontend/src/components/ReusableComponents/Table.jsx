@@ -1,11 +1,11 @@
+import { memo } from 'react';
+import { Button, Table as TableBootstrap } from 'react-bootstrap';
 import { FaTimes as Cross } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
-import { memo } from 'react';
-import { Button, Table } from 'react-bootstrap';
 
-const UserOrder = ({ orders }) => {
+const Table = ({ datum }) => {
   return (
-    <Table striped hover responsive className="table-sm align-middle">
+    <TableBootstrap striped hover responsive className="table-sm align-middle">
       <thead>
         <tr>
           <th>ID</th>
@@ -17,27 +17,27 @@ const UserOrder = ({ orders }) => {
         </tr>
       </thead>
       <tbody>
-        {orders?.map((order) => (
-          <tr key={order._id}>
-            <td>{order._id}</td>
-            <td>{order.createdAt.substring(0, 10)}</td>
-            <td>${order.totalPrice}</td>
+        {datum?.map((data) => (
+          <tr key={data._id}>
+            <td>{data._id}</td>
+            <td>{data.createdAt.substring(0, 10)}</td>
+            <td>${data.totalPrice}</td>
             <td>
-              {order.isPaid ? (
-                order.paidAt?.substring(0, 10)
+              {data.isPaid ? (
+                data.paidAt?.substring(0, 10)
               ) : (
                 <Cross style={{ color: 'red' }} />
               )}
             </td>
             <td>
-              {order.isDelivered ? (
-                order.isDelivered.substring(0, 10)
+              {data.isDelivered ? (
+                data.isDelivered.substring(0, 10)
               ) : (
                 <Cross style={{ color: 'red' }} />
               )}
             </td>
             <td>
-              <LinkContainer to={`/orders/${order._id}`}>
+              <LinkContainer to={`/orders/${data._id}`}>
                 <Button className="bnt-sm" variant="light">
                   Details
                 </Button>
@@ -46,8 +46,8 @@ const UserOrder = ({ orders }) => {
           </tr>
         ))}
       </tbody>
-    </Table>
+    </TableBootstrap>
   );
 };
 
-export default memo(UserOrder);
+export default memo(Table);
