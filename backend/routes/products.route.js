@@ -1,13 +1,17 @@
 import express from 'express';
 import {
+  createProduct,
   getAllProducts,
   getProduct,
 } from '../controllers/product.controller.js';
+import { admin, protect } from '../middleware/authMiddlleware.js';
 
 export const router = express.Router();
 
-// @desc --> can use either this syntax: router.route('/').get(getAllProducts) or:
-router.get('/', getAllProducts);
+// api/products
+
+// @desc --> get simply get all products | post --> protected and admined route for create product
+router.route('/').get(getAllProducts).post(protect, admin, createProduct);
 
 // @desc --> Fetch specific product by id
 // @route --> GET 'api/products/:id'
