@@ -7,7 +7,6 @@ import LeftBox from './LeftBox';
 import RigthBox from './RigthBox';
 
 const Order = () => {
-  const { userInfo } = useSelector((state) => state.auth);
   const { id: orderId } = useParams();
   const {
     data: orderData,

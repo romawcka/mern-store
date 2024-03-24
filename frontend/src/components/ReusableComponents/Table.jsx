@@ -31,14 +31,14 @@ const Table = ({ datum }) => {
             </td>
             <td>
               {data.isDelivered ? (
-                data.isDelivered.substring(0, 10)
+                data.deliveredAt.substring(0, 10)
               ) : (
                 <Cross style={{ color: 'red' }} />
               )}
             </td>
             <td>
               <LinkContainer to={`/orders/${data._id}`}>
-                <Button className="bnt-sm" variant="light">
+                <Button className="bnt-sm" variant="info">
                   Details
                 </Button>
               </LinkContainer>

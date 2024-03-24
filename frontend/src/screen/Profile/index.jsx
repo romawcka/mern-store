@@ -95,10 +95,16 @@ const Profile = () => {
         </Form>
       </Col>
       <Col md={9}>
-        <h2>My Orders</h2>
-        {isLoading || (isLoadingOrders && <Loader />)}
-        {error && <Message variant="danger">{error?.data?.message}</Message>}
-        <UserOrder orders={orders} />
+        {!userInfo.isAdmin && (
+          <>
+            <h2>My Orders</h2>
+            {error && (
+              <Message variant="danger">{error?.data?.message}</Message>
+            )}
+            {isLoading || (isLoadingOrders && <Loader />)}
+            <UserOrder orders={orders} />
+          </>
+        )}
       </Col>
     </Row>
   );
