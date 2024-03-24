@@ -31,7 +31,7 @@ const UserOrder = ({ orders }) => {
             </td>
             <td>
               {order.isDelivered ? (
-                order.isDelivered.substring(0, 10)
+                order.deliveredAt.substring(0, 10)
               ) : (
                 <Cross style={{ color: 'red' }} />
               )}

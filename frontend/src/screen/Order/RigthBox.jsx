@@ -6,12 +6,19 @@ import { ListGroupItem, Loader } from '../../components';
 import {
   useGetPayClientIdQuery,
   usePayOrderMutation,
+  useUpdateOrderToDeliveredMutation,
 } from '../../slices/ordersApiSlice';
+import { useSelector } from 'react-redux';
 
 const RigthBox = ({ orderData, refetch, orderId }) => {
   const { itemsPrice, shippingPrice, taxPrice, totalPrice } = orderData;
 
+  const { userInfo } = useSelector((state) => state.auth);
+
   const [payOrder, { isLoading: isLoadingPayment }] = usePayOrderMutation();
+
+  const [updateOrderToDelivered, { isLoding: isDeliver }] =
+    useUpdateOrderToDeliveredMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -58,6 +65,16 @@ const RigthBox = ({ orderData, refetch, orderId }) => {
         ],
       })
       .then((orderId) => orderId);
+  };
+
+  const deliverOrderHandler = async () => {
+    try {
+      await updateOrderToDelivered(orderId);
+      refetch();
+      toast.success('Order delivered!');
+    } catch (error) {
+      toast.error(error?.data?.message || error.message);
+    }
   };
 
   useEffect(() => {
@@ -119,6 +136,23 @@ const RigthBox = ({ orderData, refetch, orderId }) => {
               )}
             </ListGroup.Item>
           )}
+          {/* @@ only for admin --> update the delivery status to <<delivered>> */}
+          {isDeliver && <Loader />}
+          {console.log(userInfo)}
+          {userInfo &&
+            userInfo.isAdmin &&
+            orderData.isPaid &&
+            !orderData.isDelivered && (
+              <ListGroup.Item>
+                <Button
+                  type="button"
+                  className="bnt btn-block"
+                  onClick={deliverOrderHandler}
+                >
+                  Mark as Deliver
+                </Button>
+              </ListGroup.Item>
+            )}
         </ListGroup>
       </Card>
     </Col>
