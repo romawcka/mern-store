@@ -46,7 +46,7 @@ const router = createRouter(
       </Route>
       {/* routes for admin */}
       <Route path="" element={<AdminRouter />}>
-        <Route path="/admin/orderlist" element={<OrderList />} />
+        <Route path="/admin/orderslist" element={<OrderList />} />
       </Route>
     </Route>,
   ),
