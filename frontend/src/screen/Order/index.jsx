@@ -1,5 +1,4 @@
 import { Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Loader, Message } from '../../components';
 import { useGetOrderDetailQuery } from '../../slices/ordersApiSlice';

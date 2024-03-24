@@ -1,4 +1,4 @@
-import { Loader, Message, Table } from '../../../components';
+import { CustomizedTable, Loader, Message } from '../../../components';
 import { useGetOrdersQuery } from '../../../slices/ordersApiSlice';
 
 const OrderList = () => {
@@ -10,7 +10,7 @@ const OrderList = () => {
       <h1>Orders</h1>
       {isLoading && <Loader />}
       {error && <Message>{error}</Message>}
-      <Table datum={orders} />
+      <CustomizedTable datum={orders} />
     </>
   );
 };

@@ -16,6 +16,6 @@ export { default as ComponentWithStrong } from './ReusableComponents/ComponentWi
 export { default as ListGroupItem } from './ReusableComponents/ListGroupItem';
 export { default as OrderItem } from './ReusableComponents/OrderItem';
 export { default as DropDown } from './ReusableComponents/DropDown';
-export { default as Table } from './ReusableComponents/Table';
+export { default as CustomizedTable } from './ReusableComponents/CustomizedTable';
 
 // export { default as ProductItem } from './ProductItem/index';

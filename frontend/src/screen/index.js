@@ -8,4 +8,7 @@ export { default as Shipping } from './Shipping';
 export { default as PlaceOrder } from './PlaceOrder';
 export { default as Order } from './Order';
 export { default as Profile } from './Profile';
+
+// @@ --> below are admin pages
 export { default as OrderList } from './Admin/OrderList';
+export { default as ProductsList } from './Admin/ProductsList';

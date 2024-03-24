@@ -2,11 +2,10 @@ import { memo, useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { Loader, Message } from '../../components';
+import { CustomizedTable, Loader, Message } from '../../components';
 import { setCredentials } from '../../slices/authSlice';
 import { useGetMyOrdersQuery } from '../../slices/ordersApiSlice';
 import { useProfileMutation } from '../../slices/usersApiSlice';
-import UserOrder from './UserOrder';
 
 const Profile = () => {
   const [name, setName] = useState('');
@@ -102,7 +101,8 @@ const Profile = () => {
               <Message variant="danger">{error?.data?.message}</Message>
             )}
             {isLoading || (isLoadingOrders && <Loader />)}
-            <UserOrder orders={orders} />
+            <CustomizedTable datum={orders} />
+            {/* <UserOrder orders={orders} /> */}
           </>
         )}
       </Col>
