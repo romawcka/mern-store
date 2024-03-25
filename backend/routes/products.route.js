@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   createProduct,
+  deleteProduct,
   getAllProducts,
   getProduct,
   updateProduct,
@@ -17,5 +18,9 @@ router.route('/').get(getAllProducts).post(protect, admin, createProduct);
 // @desc --> Fetch specific product by id
 // @route --> 'api/products/:id' GET - get specific product | PUT - edit specific product for protected and admined user
 // @access --> public | --> private + admin
-router.route('/:id').get(getProduct).put(protect, admin, updateProduct);
+router
+  .route('/:id')
+  .get(getProduct)
+  .put(protect, admin, updateProduct)
+  .delete(protect, admin, deleteProduct);
 // for single route, we can use route,get('/:id', getProduct)
