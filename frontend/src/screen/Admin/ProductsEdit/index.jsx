@@ -6,6 +6,7 @@ import { FormContainer, FormGroup, Loader, Message } from '../../../components';
 import {
   useGetProductDetailQuery,
   useUpdateProductMutation,
+  useUploadImageMutation,
 } from '../../../slices/productsApiSlice';
 
 const ProductEdit = () => {
@@ -33,6 +34,8 @@ const ProductEdit = () => {
   // @@desc --> fn for updaing product
   const [updateProduct, { isLoading: isCreating, error: updateError }] =
     useUpdateProductMutation();
+
+  const [uploadImage, { isLoading: isUploding }] = useUploadImageMutation();
 
   useEffect(() => {
     if (productData) {
@@ -70,24 +73,42 @@ const ProductEdit = () => {
     }
   };
 
+  const uploadImageHandler = async (e) => {
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+    console.log(formData);
+    try {
+      const res = await uploadImage(formData).unwrap();
+      toast.success(res.message);
+      setData({ ...data, image: res.image });
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data?.message || error?.error);
+    }
+  };
+
+  const loading = isCreating || isLoading || isUploding;
+
   return (
     <>
       <Link to="/admin/productslist" className="btn btn-light my-3">
         Go Back
       </Link>
       <FormContainer>
-        {isLoading || (isCreating && <Loader />)}
+        {loading && <Loader />}
         {error ||
           (updateError && (
             <Message variant="danger">{error || updateError}</Message>
           ))}
         <Form onSubmit={sumbitHandler}>
+          {/* name field */}
           <FormGroup
             label="Name"
             placeholder="Enter name"
             value={data.name}
             onChange={(e) => setData({ ...data, name: e.target.value })}
           />
+          {/* price field */}
           <FormGroup
             label="Price"
             type="number"
@@ -96,12 +117,29 @@ const ProductEdit = () => {
             onChange={(e) => setData({ ...data, price: e.target.value })}
           />
           {/* image input placeholder */}
+          {/* image field */}
+          <Form.Group>
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter image url"
+              value={data.image}
+              onChange={(e) => setData({ ...data, image: e.target.value })}
+            ></Form.Control>
+            <Form.Control
+              type="file"
+              label="Choose file"
+              onChange={uploadImageHandler}
+            ></Form.Control>
+          </Form.Group>
+          {/* brand field */}
           <FormGroup
             label="Brand"
             value={data.brand}
             placeholder="Enter brand"
             onChange={(e) => setData({ ...data, brand: e.target.value })}
           />
+          {/* count in stock field */}
           <FormGroup
             label="Count In Stock"
             type="number"
@@ -109,12 +147,14 @@ const ProductEdit = () => {
             placeholder="Enter count in stock"
             onChange={(e) => setData({ ...data, countInStock: e.target.value })}
           />
+          {/* category field */}
           <FormGroup
             label="Category"
             value={data.category}
             placeholder="Enter category"
             onChange={(e) => setData({ ...data, category: e.target.value })}
           />
+          {/* description field */}
           <FormGroup
             label="Description"
             value={data.description}

@@ -1,13 +1,15 @@
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
+import path from 'path';
 import { mongooseConnection } from './db.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { router as orderRoutes } from './routes/order.route.js';
 import { router as productRoutes } from './routes/products.route.js';
+import { router as uploadRoutes } from './routes/upload.route.js';
 import { router as usersRoutes } from './routes/users.route.js';
-dotenv.config();
 
+dotenv.config();
 // port where app will work
 // eslint-disable-next-line no-undef
 const port = process.env.PORT;
@@ -35,10 +37,15 @@ app.get('/', (req, res, next) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
 
+// @desc -> for paypal
 app.get('/api/config/paypal', (req, res) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID }),
 );
+
+const __dirname = path.resolve(); // Set __dirmane to current directoty
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // error handlersapp.use(notFound);
 app.use(errorHandler);
