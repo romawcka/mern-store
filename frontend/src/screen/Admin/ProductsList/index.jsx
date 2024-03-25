@@ -4,29 +4,44 @@ import { toast } from 'react-toastify';
 import { CustomizedTable, Loader, Message } from '../../../components';
 import {
   useCreateProductMutation,
+  useDeleteProductMutation,
   useGetProductsQuery,
 } from '../../../slices/productsApiSlice';
 
 const ProductsList = () => {
+  // @desc -> general data for products
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();
 
+  // @desc -> fn for creating product
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
+  // @desc -> fn for deleting product
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm('Would you like to create a new product')) {
       try {
         await createProduct();
         refetch();
-        toast.success('The product was s uccessfully created');
+        toast.success('The product was successfully created');
       } catch (error) {
         toast.error(error?.data?.message || error.error);
       }
     }
   };
 
-  const handleDelete = (id) => console.log(`delete ${id}`);
+  const handleDelete = async (id) => {
+    if (window.confirm('Would you like to delete product?')) {
+      try {
+        await deleteProduct(id);
+        refetch();
+        toast.success('The product was successfully deleted');
+      } catch (error) {
+        toast.error(error?.data?.message || error.error);
+      }
+    }
+  };
 
-  const loading = isLoading || isCreating;
+  const loading = isLoading || isCreating || isDeleting;
 
   return (
     <>
