@@ -8,6 +8,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: PRODUCTS_URL,
       }),
+      providesTags: ['Product'],
       keepUnusedDataFor: 5,
     }),
     // @ getSingleProduct
@@ -25,6 +26,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       // @@ in order to delete from cashe - so no need to relaod page once new product will be createds
       invalidatesTags: ['Product'],
     }),
+    updateProduct: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTS_URL}/${data._id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Product'],
+    }),
   }),
 });
 
@@ -32,4 +41,5 @@ export const {
   useGetProductsQuery,
   useGetProductDetailQuery,
   useCreateProductMutation,
+  useUpdateProductMutation,
 } = productsApiSlice;

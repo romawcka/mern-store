@@ -1,8 +1,8 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { CustomizedTable, Loader, Message } from '../../components';
+import { CustomizedTable, FormGroup, Loader, Message } from '../../components';
 import { setCredentials } from '../../slices/authSlice';
 import { useGetMyOrdersQuery } from '../../slices/ordersApiSlice';
 import { useProfileMutation } from '../../slices/usersApiSlice';
@@ -12,15 +12,16 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { userInfo } = useSelector((state) => state.auth);
 
   const [updateProfile, { isLoading }] = useProfileMutation();
   const {
     data: orders,
     isLoading: isLoadingOrders,
     error,
+    refetch,
   } = useGetMyOrdersQuery();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.auth);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -35,6 +36,7 @@ const Profile = () => {
           password,
         }).unwrap();
         dispatch(setCredentials(res));
+        refetch();
         toast.success('Profile was successfully updated');
       } catch (error) {
         toast.error(error?.data?.message || 'Profile could be updated');
@@ -55,26 +57,26 @@ const Profile = () => {
         <h2>User Profile</h2>
 
         <Form onSubmit={submitHandler}>
-          <Input
-            label={'Name'}
-            type={'name'}
+          <FormGroup
+            label="Name"
+            type="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <Input
+          <FormGroup
             label={'Email'}
             type={'email'}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Input
+          <FormGroup
             label={'Password'}
             type={'password'}
             value={password}
             otherI
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Input
+          <FormGroup
             label={'Confirm Password'}
             type={'password'}
             value={confirmPassword}
@@ -102,7 +104,6 @@ const Profile = () => {
             )}
             {isLoading || (isLoadingOrders && <Loader />)}
             <CustomizedTable datum={orders} />
-            {/* <UserOrder orders={orders} /> */}
           </>
         )}
       </Col>
@@ -111,17 +112,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-const Input = memo(function Input({ label, type, value, onChange }) {
-  return (
-    <Form.Group controlId={label} className="my-2">
-      <Form.Label>{label}</Form.Label>
-      <Form.Control
-        type={type}
-        placeholder={`Enter your ${type}`}
-        value={value}
-        onChange={onChange}
-      ></Form.Control>
-    </Form.Group>
-  );
-});

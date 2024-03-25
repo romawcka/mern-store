@@ -12,3 +12,4 @@ export { default as Profile } from './Profile';
 // @@ --> below are admin pages
 export { default as OrderList } from './Admin/OrderList';
 export { default as ProductsList } from './Admin/ProductsList';
+export { default as ProductsEdit } from './Admin/ProductsEdit';

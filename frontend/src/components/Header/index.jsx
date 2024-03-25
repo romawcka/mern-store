@@ -79,7 +79,7 @@ const Header = () => {
                   path="/admin/orderslist"
                   pathSecond="/admin/userlist"
                   nameSecond="Users"
-                  pathThird="/admin/productlist"
+                  pathThird="/admin/productslist"
                   nameThird="Products"
                 />
               )}
