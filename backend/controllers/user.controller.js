@@ -114,9 +114,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       isAdmin: updatedUser.isAdmin,
     });
   } else {
-    res.status(404).json({
-      message: 'User not found',
-    });
+    res.status(404);
+    throw new Error('User not found');
   }
 });
 
@@ -124,28 +123,69 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route -> GET 'api/users'
 // @access -> private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  res.send('get list of users');
+  const users = await User.find({});
+  res.status(200).json(users);
 });
 
 // @desc -> get specific user, by id
 // @route -> GET 'api/users/:id'
 // @access -> private/Admin
 const getUser = asyncHandler(async (req, res) => {
-  res.send('get specific user');
+  const user = await User.findById(req.user._id).select('-password');
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 });
 
 // @desc -> delete users
 // @route -> DELETE 'api/users/:id'
 // @access -> private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
-  res.send('delete user');
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error('Cannot delete admin user');
+    }
+    await User.deleteOne({ _id: user._id });
+    res.status(201).json({ message: 'User was successfully deleted' });
+  } else {
+    res.status(400);
+    throw new Error('User was not found');
+  }
 });
 
 // @desc -> update user
 // @route -> PUT 'api/users/:id'
 // @access -> private/Admin
 const updateUser = asyncHandler(async (req, res) => {
-  res.send('update user');
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name; // для обновление user name будет использовано либо то что будет в body.name или то, что уже есть
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin);
+
+    if (req.body.password) {
+      user.password = req.body.password; // нужно проверять, есть ли что-то в поле password для обновления, тк у нас захеширован пароль в базе данных, и его просто так не получится использовать как user.name / email
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
 });
 
 export {
