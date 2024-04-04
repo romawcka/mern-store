@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Loader, Message, QtyForm, Rating } from '../../components';
 import { addToCart } from '../../slices/cartSlice';
 import { useGetProductDetailQuery } from '../../slices/productsApiSlice';
-
+import styles from './index.module.css';
 const Product = () => {
   const { id: productId } = useParams();
   const [qty, setQty] = useState(1);
@@ -44,7 +44,7 @@ const Product = () => {
       {isLoading && <Loader />}
       {error && <Message variant="danger">{error?.message}</Message>}
 
-      <Row>
+      <Row className={styles.row}>
         {/* first column */}
         <Col md={5}>
           <Image src={image} alt={name} fluid />
