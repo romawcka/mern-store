@@ -23,6 +23,7 @@ import {
   Profile,
   Register,
   Shipping,
+  UserEdit,
   UserList,
 } from './screen/index.js';
 
@@ -50,10 +51,11 @@ const router = createRouter(
       </Route>
       {/* routes for admin */}
       <Route path="" element={<AdminRouter />}>
-        <Route path="/admin/orderslist" element={<OrderList />} />
-        <Route path="/admin/productslist" element={<ProductsList />} />
+        <Route path="/admin/orders" element={<OrderList />} />
+        <Route path="/admin/products" element={<ProductsList />} />
         <Route path="/admin/products/:id/edit" element={<ProductsEdit />} />
-        <Route path="/admin/userslist/" element={<UserList />} />
+        <Route path="/admin/users/" element={<UserList />} />
+        <Route path="/admin/users/:id/edit" element={<UserEdit />} />
       </Route>
     </Route>,
   ),

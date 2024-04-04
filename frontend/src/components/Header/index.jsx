@@ -76,10 +76,10 @@ const Header = () => {
                   title="Admin Panel"
                   name="Orders"
                   id="adminuser"
-                  path="/admin/orderslist"
-                  pathSecond="/admin/userslist"
+                  path="/admin/orders"
+                  pathSecond="/admin/users"
                   nameSecond="Users"
-                  pathThird="/admin/productslist"
+                  pathThird="/admin/products"
                   nameThird="Products"
                 />
               )}
