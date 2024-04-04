@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { Button, Table as TableBootstrap } from 'react-bootstrap';
 import {
   FaTimes as CrossIcon,
+  FaCheck as CheckedIcon,
   FaEdit as EditIcon,
   FaTrash as TrashIcon,
 } from 'react-icons/fa';
@@ -21,6 +22,14 @@ const CustomizedTable = ({ datum, type = 'order', handleDelete }) => {
               <th>BRAND</th>
               <th></th>
             </>
+          ) : type === 'users' ? (
+            <>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>PRICE</th>
+              <th>ADMIN</th>
+              <th></th>
+            </>
           ) : (
             <>
               <th>ID</th>
@@ -38,6 +47,8 @@ const CustomizedTable = ({ datum, type = 'order', handleDelete }) => {
           <tr key={data._id}>
             <td>{data._id}</td>
             {/* -- differences between two types */}
+            {/* @@ table for products */}
+
             {type === 'product' ? (
               <>
                 <td>{data.name}</td>
@@ -59,8 +70,38 @@ const CustomizedTable = ({ datum, type = 'order', handleDelete }) => {
                   </Button>
                 </td>
               </>
+            ) : type === 'users' ? (
+              <>
+                {/* @@ table for users */}
+                <td>{data.name}</td>
+                <td>
+                  <a href={`mailto:${data.email}`}>{data.email}</a>
+                </td>
+                <td>
+                  {data.isAdmin ? (
+                    <CheckedIcon style={{ color: 'green' }} />
+                  ) : (
+                    <CrossIcon style={{ color: 'red' }} />
+                  )}
+                </td>
+                <td>
+                  <LinkContainer to={`/admin/users/${data._id}/edit`}>
+                    <Button className="bnt-sm" variant="light">
+                      <EditIcon />
+                    </Button>
+                  </LinkContainer>
+                  <Button
+                    variant="danger"
+                    className="btn-sm"
+                    onClick={() => handleDelete(data._id)}
+                  >
+                    <TrashIcon style={{ color: 'white' }} />
+                  </Button>
+                </td>
+              </>
             ) : (
               <>
+                {/* @@ table for orders */}
                 <td>{data.createdAt.substring(0, 10)}</td>
                 <td>${data.totalPrice}</td>
                 <td>

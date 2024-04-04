@@ -13,3 +13,4 @@ export { default as Profile } from './Profile';
 export { default as OrderList } from './Admin/OrderList';
 export { default as ProductsList } from './Admin/ProductsList';
 export { default as ProductsEdit } from './Admin/ProductsEdit';
+export { default as UserList } from './Admin/UserList';

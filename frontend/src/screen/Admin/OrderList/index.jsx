@@ -3,7 +3,6 @@ import { useGetOrdersQuery } from '../../../slices/ordersApiSlice';
 
 const OrderList = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
-  console.log(orders);
 
   return (
     <>
