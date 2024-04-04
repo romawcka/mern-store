@@ -23,6 +23,7 @@ import {
   Profile,
   Register,
   Shipping,
+  UserList,
 } from './screen/index.js';
 
 import { Provider } from 'react-redux';
@@ -52,6 +53,7 @@ const router = createRouter(
         <Route path="/admin/orderslist" element={<OrderList />} />
         <Route path="/admin/productslist" element={<ProductsList />} />
         <Route path="/admin/products/:id/edit" element={<ProductsEdit />} />
+        <Route path="/admin/userslist/" element={<UserList />} />
       </Route>
     </Route>,
   ),

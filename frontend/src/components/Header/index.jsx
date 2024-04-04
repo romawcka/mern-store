@@ -77,7 +77,7 @@ const Header = () => {
                   name="Orders"
                   id="adminuser"
                   path="/admin/orderslist"
-                  pathSecond="/admin/userlist"
+                  pathSecond="/admin/userslist"
                   nameSecond="Users"
                   pathThird="/admin/productslist"
                   nameThird="Products"
