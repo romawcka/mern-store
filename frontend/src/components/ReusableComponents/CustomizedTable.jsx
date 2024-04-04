@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { Button, Table as TableBootstrap } from 'react-bootstrap';
 import {
-  FaTimes as CrossIcon,
   FaCheck as CheckedIcon,
+  FaTimes as CrossIcon,
   FaEdit as EditIcon,
   FaTrash as TrashIcon,
 } from 'react-icons/fa';
