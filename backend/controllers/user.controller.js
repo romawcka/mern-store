@@ -164,12 +164,14 @@ const deleteUser = asyncHandler(async (req, res) => {
 // @route -> PUT 'api/users/:id'
 // @access -> private/Admin
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const { name, email, isAdmin } = req.body;
+
+  const user = await User.findById(req.params.id);
 
   if (user) {
-    user.name = req.body.name || user.name; // для обновление user name будет использовано либо то что будет в body.name или то, что уже есть
-    user.email = req.body.email || user.email;
-    user.isAdmin = Boolean(req.body.isAdmin);
+    user.name = name || user.name; // для обновление user name будет использовано либо то что будет в body.name или то, что уже есть
+    user.email = email || user.email;
+    user.isAdmin = Boolean(isAdmin || user.isAdmin);
 
     if (req.body.password) {
       user.password = req.body.password; // нужно проверять, есть ли что-то в поле password для обновления, тк у нас захеширован пароль в базе данных, и его просто так не получится использовать как user.name / email
@@ -177,12 +179,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
     const updatedUser = await user.save();
 
-    res.status(200).json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-    });
+    res.status(200).json(updatedUser);
   } else {
     res.status(404);
     throw new Error('User not found');

@@ -51,7 +51,7 @@ const ProductEdit = () => {
     }
   }, [productData]);
 
-  const sumbitHandler = async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const updatedProduct = {
       _id: productId,
@@ -66,8 +66,8 @@ const ProductEdit = () => {
     try {
       await updateProduct(updatedProduct).unwrap();
       toast.success('The product was successfully updated');
-      navigate('/admin/productslist');
       refetch();
+      navigate('/admin/products');
     } catch (error) {
       toast.error(error?.data?.message || error.error);
     }
@@ -91,7 +91,7 @@ const ProductEdit = () => {
 
   return (
     <>
-      <Link to="/admin/productslist" className="btn btn-light my-3">
+      <Link to="/admin/products" className="btn btn-light my-3">
         Go Back
       </Link>
       <FormContainer>
@@ -100,7 +100,7 @@ const ProductEdit = () => {
           (updateError && (
             <Message variant="danger">{error || updateError}</Message>
           ))}
-        <Form onSubmit={sumbitHandler}>
+        <Form onSubmit={submitHandler}>
           {/* name field */}
           <FormGroup
             label="Name"
