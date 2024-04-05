@@ -1,17 +1,27 @@
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { CustomizedTable, Loader, Message } from '../../../components';
+import {
+  CustomizedTable,
+  Loader,
+  Message,
+  Pagination,
+} from '../../../components';
 import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from '../../../slices/usersApiSlice';
 
 const UserList = () => {
+  const { pageNumber } = useParams();
+
   const {
-    data: users,
+    data,
     isLoading,
     error: usersError,
     refetch,
-  } = useGetUsersQuery();
+  } = useGetUsersQuery({ pageNumber });
+
+  const { users, page, pages } = data || {};
 
   const [deleteUser, { isLoading: isDeleting, error: deleteError }] =
     useDeleteUserMutation();
@@ -36,6 +46,7 @@ const UserList = () => {
       {loading && <Loader />}
       {error && <Message>{error}</Message>}
       <CustomizedTable datum={users} type="users" handleDelete={handleDelete} />
+      <Pagination page={page} pages={pages} isAdmin adminPath="users" />
     </>
   );
 };

@@ -80,7 +80,7 @@ const ProductsList = () => {
         handleDelete={handleDelete}
       />
 
-      <Pagination page={page} pages={pages} isAdmin />
+      <Pagination page={page} pages={pages} isAdmin adminPath="products" />
     </>
   );
 };
