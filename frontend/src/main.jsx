@@ -54,10 +54,12 @@ const router = createRouter(
       {/* routes for admin */}
       <Route path="" element={<AdminRouter />}>
         <Route path="/admin/orders" element={<OrderList />} />
+        <Route path="/admin/orders/:pageNumber" element={<OrderList />} />
         <Route path="/admin/products" element={<ProductsList />} />{' '}
         <Route path="/admin/products/:pageNumber" element={<ProductsList />} />
         <Route path="/admin/products/:id/edit" element={<ProductsEdit />} />
         <Route path="/admin/users/" element={<UserList />} />
+        <Route path="/admin/users/:pageNumber" element={<UserList />} />
         <Route path="/admin/users/:id/edit" element={<UserEdit />} />
       </Route>
     </Route>,

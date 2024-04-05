@@ -123,19 +123,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route -> GET 'api/users'
 // @access -> private/Admin
 const getUsers = asyncHandler(async (req, res) => {
-  const pageSize = 2;
-
-  // @@desc --> get the page number from url
-  const page = Number(req.query.pageNumber) || 1;
-
-  // @@desc --> get total count of products
-  const count = await User.countDocuments();
-
-  // @@desc --> get users, that limits by page size and skip the prv page
-  const users = await User.find({})
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
-  res.status(200).json({ users, page, pages: Math.ceil(count / pageSize) });
+  const users = await User.find({});
+  res.status(200).json(users);
 });
 
 // @desc -> get specific user, by id
