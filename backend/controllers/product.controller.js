@@ -5,8 +5,20 @@ import { Product } from '../models/product.model.js';
 
 // @desc --> Fetch all products | @route --> GET 'api/products/' | @access --> public
 export const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.status(200).json(products);
+  const pageSize = 2;
+
+  // @@desc --> get the page number from url
+  const page = Number(req.query.pageNumber) || 1;
+  // @@desc --> get total count of products
+  const count = await Product.countDocuments();
+
+  // @@desc --> get products, that limits by page size and skip the prv page
+  const products = await Product.find({})
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  // @@desc --> return products, one page and all pages
+  res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc --> Fetch specific product by id
