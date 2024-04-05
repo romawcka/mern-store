@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
-import { Loader, Message, Product } from '../../components';
+import { Loader, Message, Pagination, Product } from '../../components';
 import { useGetProductsQuery } from '../../slices/productsApiSlice';
 import { useParams } from 'react-router-dom';
 
@@ -23,6 +23,7 @@ const Home = () => {
           </Col>
         ))}
       </Row>
+      <Pagination pages={pages} page={page} />
     </>
   );
 };

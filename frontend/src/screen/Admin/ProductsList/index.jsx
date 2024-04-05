@@ -1,16 +1,27 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import { FaEdit as EditIcon } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { CustomizedTable, Loader, Message } from '../../../components';
+import {
+  CustomizedTable,
+  Loader,
+  Message,
+  Pagination,
+} from '../../../components';
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
   useGetProductsQuery,
 } from '../../../slices/productsApiSlice';
+import { useParams } from 'react-router-dom';
 
 const ProductsList = () => {
+  const { pageNumber } = useParams();
   // @desc -> general data for products
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
+
+  const { products, page, pages } = data || {};
 
   // @desc -> fn for creating product
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
@@ -63,13 +74,13 @@ const ProductsList = () => {
       {loading && <Loader />}
       {error && <Message variant="danger">{error}</Message>}
 
-      <>
-        <CustomizedTable
-          datum={products}
-          type="product"
-          handleDelete={handleDelete}
-        />
-      </>
+      <CustomizedTable
+        datum={products}
+        type="product"
+        handleDelete={handleDelete}
+      />
+
+      <Pagination page={page} pages={pages} isAdmin />
     </>
   );
 };
