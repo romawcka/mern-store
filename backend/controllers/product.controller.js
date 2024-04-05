@@ -77,3 +77,47 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error('Resourse not found');
   }
 });
+
+// @desc   --> create a new review
+// @route  --> POST 'api/products/:id/reviews'
+// @access --> protect
+export const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+
+  const product = await Product.findById(req.params.id);
+  // @@desc --> в случае сущ-ния продукта
+  if (product) {
+    // @desc --> check if the product is not reviewed
+    const alreadyReviewed = product.reviews.find(
+      (review) => review.user.toString() === req.user._id.toString(),
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error('Product already reviewed');
+    }
+    // @@desc --> in case the product is not reviewed, create review object
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    };
+    // @@desc --> push a newly created review object into model in backend
+    product.reviews.push(review);
+
+    product.numReviews = product.reviews.length;
+
+    // @@desc --> create product ratings by adding all together reviews
+    product.rating =
+      product.reviews.reduce((acc, review) => acc + review.rating, 0) /
+      product.reviews.length;
+
+    // @@desc --> save all changes
+    await product.save();
+    res.status(201).json({ message: 'Review added' });
+  } else {
+    res.status(404);
+    throw new Error('Resourse not found');
+  }
+});
