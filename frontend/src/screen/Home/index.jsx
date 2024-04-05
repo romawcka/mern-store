@@ -1,9 +1,14 @@
 import { Col, Row } from 'react-bootstrap';
 import { Loader, Message, Product } from '../../components';
 import { useGetProductsQuery } from '../../slices/productsApiSlice';
+import { useParams } from 'react-router-dom';
 
 const Home = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { pageNumber } = useParams();
+
+  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
+
+  const { products, page, pages } = data || {};
 
   if (isLoading) return <Loader />;
   if (error) return <Message variant="danger">{error?.message}</Message>;
