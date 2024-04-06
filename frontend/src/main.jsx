@@ -37,8 +37,13 @@ const router = createRouter(
   routes(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<Home />} />
+      {/* @@desc --> for searching */}
+      <Route path="/search/:keyword" element={<Home />} />
       {/* @@desc --> for implementing pagination */}
       <Route path="/page/:pageNumber" element={<Home />} />
+      {/* @@desc --> for searching + pagination*/}
+      <Route path="/search/:keyword/page/:pageNumber" element={<Home />} />
+
       <Route path="/products/:id" element={<Product />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />

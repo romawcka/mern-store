@@ -5,20 +5,16 @@ import { Product } from '../models/product.model.js';
 
 // @desc --> Fetch all products | @route --> GET 'api/products/' | @access --> public
 export const getAllProducts = asyncHandler(async (req, res) => {
-  const pageSize = 1;
+  const pageSize = 5;
 
   // @@desc --> get the page number from url
   const page = Number(req.query.pageNumber) || 1;
-  // @@desc --> get the keyword from url
-  const keyword = req.query.keyword && {
-    name: { $regex: req.query.keyword, $options: 'i' },
-  };
 
   // @@desc --> get total count of products
-  const count = await Product.countDocuments({ ...keyword });
+  const count = await Product.countDocuments();
 
   // @@desc --> get products, that limits by page size and skip the prv page
-  const products = await Product.find({ ...keyword })
+  const products = await Product.find({})
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
