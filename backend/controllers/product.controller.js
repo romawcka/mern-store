@@ -10,9 +10,9 @@ export const getAllProducts = asyncHandler(async (req, res) => {
   // @@desc --> get the page number from url
   const page = Number(req.query.pageNumber) || 1;
   // @@desc --> get the keyword from url
-  const keyword = req.query.keyword
-    ? { name: { $regex: req.query.keyword, $options: 'i' } }
-    : {};
+  const keyword = req.query.keyword && {
+    name: { $regex: req.query.keyword, $options: 'i' },
+  };
 
   // @@desc --> get total count of products
   const count = await Product.countDocuments({ ...keyword });
