@@ -12,6 +12,7 @@ export { default as QtyForm } from './QtyForm';
 export { default as Rating } from './Rating';
 export { default as Toast } from './ToastContainer';
 export { default as Pagination } from './Pagination';
+export { default as SearchBox } from './SearchBox';
 
 export { default as ComponentWithStrong } from './ReusableComponents/ComponentWithStrong';
 export { default as ListGroupItem } from './ReusableComponents/ListGroupItem';

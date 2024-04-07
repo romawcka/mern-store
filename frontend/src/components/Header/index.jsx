@@ -8,6 +8,7 @@ import logo from '../../assets/logo.png';
 import { logout } from '../../slices/authSlice';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
 import DropDown from '../ReusableComponents/DropDown';
+import SearchBox from '../SearchBox';
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -33,6 +34,7 @@ const Header = () => {
     <header>
       <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
         <Container>
+          {/* logo with navigation to home */}
           <LinkContainer to="/">
             <Navbar.Brand>
               <img src={logo} alt="Store Logo" />
@@ -42,6 +44,9 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
+              {/* seatchbox */}
+              <SearchBox />
+              {/* cart */}
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <ShoppingCart /> Cart
@@ -54,6 +59,7 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
               {/* */}
+              {/* dropdown menu when user login */}
               {userInfo ? (
                 // dropdown menu when user login
                 <DropDown
@@ -70,6 +76,8 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
+              {/* */}
+              {/* dropdown menu for admin only */}
               {/* for admin only */}
               {userInfo && userInfo.isAdmin && (
                 <DropDown

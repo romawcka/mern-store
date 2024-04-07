@@ -5,7 +5,7 @@ import { Product } from '../models/product.model.js';
 
 // @desc --> Fetch all products | @route --> GET 'api/products/' | @access --> public
 export const getAllProducts = asyncHandler(async (req, res) => {
-  const pageSize = 1;
+  const pageSize = 5;
 
   // @@desc --> get the page number from url
   const page = Number(req.query.pageNumber) || 1;
