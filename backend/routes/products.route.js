@@ -5,6 +5,7 @@ import {
   deleteProduct,
   getAllProducts,
   getProduct,
+  getTopProducts,
   updateProduct,
 } from '../controllers/product.controller.js';
 import { admin, protect } from '../middleware/authMiddlleware.js';
@@ -15,6 +16,9 @@ export const router = express.Router();
 
 // @desc --> get simply get all products | post --> protected and admined route for create product
 router.route('/').get(getAllProducts).post(protect, admin, createProduct);
+
+// @desc --> get top-rated products
+router.get('/top', getTopProducts);
 
 // @desc --> Fetch specific product by id
 // @route --> 'api/products/:id' GET - get specific product | PUT - edit specific product for protected and admined user

@@ -138,3 +138,12 @@ export const createProductReview = asyncHandler(async (req, res) => {
     throw new Error('Resourse not found');
   }
 });
+
+// @desc --> get top-rated products
+// @route --> GET 'api/products/top'
+// @access --> public
+export const getTopProducts = asyncHandler(async (req, res) => {
+  const product = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.status(200).json(product);
+});

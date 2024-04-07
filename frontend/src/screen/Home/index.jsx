@@ -1,24 +1,43 @@
 import { Col, Row } from 'react-bootstrap';
-import { Loader, Message, Pagination, Product } from '../../components';
-import { useGetProductsQuery } from '../../slices/productsApiSlice';
 import { Link, useParams } from 'react-router-dom';
+import { Loader, Message, Pagination, Product } from '../../components';
+import ProductCarousel from '../../components/ProductCarousel';
+import {
+  useGetProductsQuery,
+  useGetTopProductsQuery,
+} from '../../slices/productsApiSlice';
 
 const Home = () => {
   const { pageNumber, keyword } = useParams();
 
-  const { data, isLoading, error } = useGetProductsQuery({
+  const {
+    data,
+    isLoading,
+    error: errorProduct,
+  } = useGetProductsQuery({
     keyword,
     pageNumber,
   });
 
+  const {
+    data: topProducts,
+    isLoading: isLoadingTop,
+    error: topError,
+  } = useGetTopProductsQuery();
+
   const { products, page, pages } = data || {};
 
-  if (isLoading) return <Loader />;
+  const loading = isLoading || isLoadingTop;
+  const error = errorProduct || topError;
+
+  if (loading) return <Loader />;
   if (error) return <Message variant="danger">{error?.message}</Message>;
 
   return (
     <>
-      {keyword && (
+      {!keyword ? (
+        <ProductCarousel topProducts={topProducts} />
+      ) : (
         <Link to="/" className="btn btn-light mr-4">
           Go Home
         </Link>
