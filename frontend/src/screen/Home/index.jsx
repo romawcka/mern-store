@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import { Loader, Message, Pagination, Product } from '../../components';
 import { useGetProductsQuery } from '../../slices/productsApiSlice';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Home = () => {
   const { pageNumber, keyword } = useParams();
@@ -18,6 +18,11 @@ const Home = () => {
 
   return (
     <>
+      {keyword && (
+        <Link to="/" className="btn btn-light mr-4">
+          Go Home
+        </Link>
+      )}
       <h1>Latest Products</h1>
       <Row>
         {products.map((product) => (
