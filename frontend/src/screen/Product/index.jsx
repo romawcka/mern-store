@@ -3,13 +3,12 @@ import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Loader, Message, QtyForm, Rating } from '../../components';
+import { Loader, Message, Meta, QtyForm, Rating } from '../../components';
 import { addToCart } from '../../slices/cartSlice';
 import {
   useCreateReviewMutation,
   useGetProductDetailQuery,
 } from '../../slices/productsApiSlice';
-import { calculateError, calculateLoading } from '../../utils/isStatus';
 import ReviewInput from './Review/ReviewInput';
 import ReviewTable from './Review/ReviewTable';
 import styles from './index.module.css';
@@ -45,7 +44,7 @@ const Product = () => {
     countInStock,
   } = currentProduct;
 
-  const [createReview, { isLoading: reviewsLoaing }] =
+  const [createReview, { isLoading: reviewsLoading }] =
     useCreateReviewMutation();
 
   const handleAddToCart = () => {
@@ -87,8 +86,8 @@ const Product = () => {
 
   const handleComment = (e) => setData({ ...data, comment: e.target.value });
 
-  const loading = calculateLoading(isLoading, reviewsLoaing);
-  const error = calculateError(productError);
+  const loading = isLoading || reviewsLoading;
+  const error = productError;
 
   return (
     <>
@@ -100,6 +99,7 @@ const Product = () => {
       {loading && <Loader />}
       {error && <Message variant="danger">{error?.message}</Message>}
       <>
+        <Meta title={name} />
         <Row className={styles.row}>
           {/* first column */}
           <Col md={5}>

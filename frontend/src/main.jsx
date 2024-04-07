@@ -26,7 +26,7 @@ import {
   UserEdit,
   UserList,
 } from './screen/index.js';
-
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/style.css';
@@ -72,9 +72,11 @@ const router = createRouter(
 );
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <PayPalScriptProvider deferLoading={true}>
-      <RouterProvider router={router} />
-    </PayPalScriptProvider>
-  </Provider>,
+  <HelmetProvider>
+    <Provider store={store}>
+      <PayPalScriptProvider deferLoading={true}>
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
+    </Provider>
+  </HelmetProvider>,
 );

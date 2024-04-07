@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import { Loader, Message, Pagination, Product } from '../../components';
+import { Loader, Message, Meta, Pagination, Product } from '../../components';
 import ProductCarousel from '../../components/ProductCarousel';
 import {
   useGetProductsQuery,
@@ -42,6 +42,7 @@ const Home = () => {
           Go Home
         </Link>
       )}
+      <Meta />
       <h1>Latest Products</h1>
       <Row>
         {products.map((product) => (
