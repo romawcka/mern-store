@@ -20,5 +20,6 @@ export { default as OrderItem } from './ReusableComponents/OrderItem';
 export { default as DropDown } from './ReusableComponents/DropDown';
 export { default as CustomizedTable } from './ReusableComponents/CustomizedTable';
 export { default as FormGroup } from './ReusableComponents/FormGroup';
+export { default as Meta } from './ReusableComponents/Meta';
 
 // export { default as ProductItem } from './ProductItem/index';
