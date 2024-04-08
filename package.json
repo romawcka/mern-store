@@ -10,7 +10,9 @@
     "client": "cd frontend && yarn dev",
     "dev": "concurrently \"yarn serve\" \"yarn client\"",
     "data-i": "node backend/seeder",
-    "data-d": "node backend/seeder -d"
+    "data-d": "node backend/seeder -d",
+    "build": "yarn install && yarn install --prefix frontend && yarn run build-frontend",
+    "build-frontend": "cd frontend && yarn build"
   },
   "author": "romawcka <yakubovroma5@gmail.com>",
   "license": "MIT",

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -23,17 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 // cookie parser (will able to react data from cookie)
 app.use(cookieParser());
 
-// launching app
-app.get('/', (req, res, next) => {
-  // res.header('Access-Control-Allow-Origin', '*'); // Разрешить доступ со всех источников
-  // res.header(
-  //   'Access-Control-Allow-Headers',
-  //   'Origin, X-Requested-With, Content-Type, Accept',
-  // );
-  res.send('Api is running...');
-  next();
-});
-
 app.use('/api/products', productRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/orders', orderRoutes);
@@ -46,6 +36,22 @@ app.get('/api/config/paypal', (req, res) =>
 
 const __dirname = path.resolve(); // Set __dirmane to current directoty
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
+if (process.env.NODE_ENV === 'production') {
+  // @@desc --> set up static folder
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+  // @@desc --> any route that is not api routes will be redirected to the index.html
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html')),
+  );
+} else {
+  // launching app
+  app.get('/', (req, res, next) => {
+    res.send('Api is running...');
+    next();
+  });
+}
 
 // error handlersapp.use(notFound);
 app.use(errorHandler);
