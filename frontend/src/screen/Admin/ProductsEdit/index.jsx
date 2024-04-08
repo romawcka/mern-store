@@ -76,13 +76,11 @@ const ProductEdit = () => {
   const uploadImageHandler = async (e) => {
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
-    console.log(formData);
     try {
       const res = await uploadImage(formData).unwrap();
       toast.success(res.message);
       setData({ ...data, image: res.image });
     } catch (error) {
-      console.log(error);
       toast.error(error?.data?.message || error?.error);
     }
   };
