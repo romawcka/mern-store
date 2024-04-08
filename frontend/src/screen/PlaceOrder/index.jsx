@@ -15,7 +15,6 @@ import { clearCart } from '../../slices/cartSlice';
 import { useCreateOrderMutation } from '../../slices/ordersApiSlice';
 
 const PlaceOrder = () => {
-  console.log(useLocation());
   const cart = useSelector((state) => state.cart);
   const {
     shippingAddress,

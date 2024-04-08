@@ -35,14 +35,12 @@ const Register = () => {
       toast.error('Passwords do not match');
       return;
     } else {
-      console.log(name, email, password);
       try {
         const res = await register({ name, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate(redirect);
         toast.success(`${name} account was successfully register`);
       } catch (error) {
-        console.log(error);
         toast.error(error?.data?.message || error.error);
       }
     }

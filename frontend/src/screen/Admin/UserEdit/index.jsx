@@ -50,7 +50,7 @@ const UserEdit = () => {
       email: data.email,
       isAdmin: data.isAdmin,
     };
-    console.log(updatedUser);
+
     try {
       await updateUser(updatedUser).unwrap();
       toast.success('User was successfully updated');

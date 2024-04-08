@@ -33,12 +33,11 @@ const RigthBox = ({ orderData, refetch, orderId }) => {
     return actions.order.capture().then(async (details) => {
       try {
         // simply run a fn
-        await payOrder({ orderId, details });
+        await payOrder({ orderId, details }).unwrap();
         // to update window with new info
         refetch();
         toast.success('Payment was successfull');
       } catch (error) {
-        console.log(error);
         toast.error('Payment was failed');
       }
     });
@@ -138,7 +137,6 @@ const RigthBox = ({ orderData, refetch, orderId }) => {
           )}
           {/* @@ only for admin --> update the delivery status to <<delivered>> */}
           {isDeliver && <Loader />}
-          {console.log(userInfo)}
           {userInfo &&
             userInfo.isAdmin &&
             orderData.isPaid &&
