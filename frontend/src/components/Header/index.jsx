@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import logo from '../../assets/logo.png';
 import { logout } from '../../slices/authSlice';
+import { resetCart } from '../../slices/cartSlice';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
 import DropDown from '../ReusableComponents/DropDown';
 import SearchBox from '../SearchBox';
@@ -18,12 +19,14 @@ const Header = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [Logout] = useLogoutMutation();
 
   const handleLogout = async () => {
     try {
       await Logout().unwrap();
       dispatch(logout());
+      dispatch(resetCart());
       navigate('/login');
     } catch (error) {
       toast.error(error);
